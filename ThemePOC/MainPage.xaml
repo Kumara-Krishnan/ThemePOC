@@ -13,7 +13,7 @@
                 Click="Sample_Click"
                 HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
-        <Button x:Name="ThemeChanger" Content="Change the fucking theme!!" 
+        <Button x:Name="ThemeChanger" Content="Change theme!!" 
                 Click="ThemeChanger_Click"
                 Background="{ThemeResource ForegroundBrush}" Foreground="{ThemeResource BackgroundBrush}"
                 HorizontalAlignment="Center" VerticalAlignment="Center" 
