@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -22,9 +23,17 @@ namespace ThemePOC.Views
     /// </summary>
     public sealed partial class SecondaryPage : Page
     {
+        Random random;
         public SecondaryPage()
         {
             this.InitializeComponent();
+            random = new Random();
+            ThemePOC.Utils.ThemeManager.ThemeChanged += ThemeManager_ThemeChanged;
+        }
+
+        private void ThemeManager_ThemeChanged(Utils.ThemeManager theme)
+        {
+            ((SolidColorBrush)Application.Current.Resources["BackgroundBrush"]).Color = theme.HighAccentColorBrush.Color;
         }
     }
 }

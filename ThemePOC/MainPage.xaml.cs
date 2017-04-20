@@ -1,22 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.Core;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using ThemePOC.Views;
 using System.Threading.Tasks;
+using ThemePOC.Utils;
+using ThemePOC.Views;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -32,6 +24,12 @@ namespace ThemePOC
         {
             this.InitializeComponent();
             random = new Random();
+            ThemeManager.ThemeChanged += ThemeManager_ThemeChanged;
+        }
+
+        private void ThemeManager_ThemeChanged(ThemeManager theme)
+        {
+            ((SolidColorBrush)Application.Current.Resources["BackgroundBrush"]).Color = theme.HighAccentColorBrush.Color;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -40,7 +38,11 @@ namespace ThemePOC
 
         private void ThemeChanger_Click(object sender, RoutedEventArgs e)
         {
-            (Application.Current.Resources["BackgroundBrush"] as SolidColorBrush).Color=(Windows.UI.Color.FromArgb(Convert.ToByte(random.Next(255)), Convert.ToByte(random.Next(255)), Convert.ToByte(random.Next(255)), Convert.ToByte(random.Next(255))));
+            if (Application.Current.Resources.ContainsKey("BackgroundBrush"))
+            {
+                ThemeManager.Instance.HighAccentColorBrush = new SolidColorBrush((Windows.UI.Color.FromArgb(Convert.ToByte(random.Next(255)), Convert.ToByte(random.Next(255)), Convert.ToByte(random.Next(255)), Convert.ToByte(random.Next(255)))));
+            }
+            ThemeManager.Instance.NotifyThemeChanged();
         }
 
         private async Task CreateNewViewAsync()
@@ -50,7 +52,7 @@ namespace ThemePOC
             await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 Frame frame = new Frame();
-                frame.Navigate(typeof(MainPage), null);
+                frame.Navigate(typeof(SecondaryPage), null);
                 Window.Current.Content = frame;
                 // You have to activate the window in order to show it later.
                 Window.Current.Activate();
