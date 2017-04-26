@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI;
 using Windows.UI.Xaml.Media;
 
 namespace ThemePOC.Utils
@@ -30,7 +31,7 @@ namespace ThemePOC.Utils
 
         #endregion
 
-        public SolidColorBrush HighAccentColorBrush { get; set; }
+        public Color HighAccentColorBrush { get; set; }
 
         public void NotifyThemeChanged()
         {

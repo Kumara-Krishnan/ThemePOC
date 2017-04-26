@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -33,7 +34,10 @@ namespace ThemePOC.Views
 
         private void ThemeManager_ThemeChanged(Utils.ThemeManager theme)
         {
-            ((SolidColorBrush)Application.Current.Resources["BackgroundBrush"]).Color = theme.HighAccentColorBrush.Color;
+            this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                ((SolidColorBrush)Application.Current.Resources["BackgroundBrush"]).Color = theme.HighAccentColorBrush;
+            });
         }
     }
 }

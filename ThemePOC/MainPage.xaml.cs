@@ -29,7 +29,10 @@ namespace ThemePOC
 
         private void ThemeManager_ThemeChanged(ThemeManager theme)
         {
-            ((SolidColorBrush)Application.Current.Resources["BackgroundBrush"]).Color = theme.HighAccentColorBrush.Color;
+            this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                ((SolidColorBrush)Application.Current.Resources["BackgroundBrush"]).Color = theme.HighAccentColorBrush;
+            });
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -40,7 +43,7 @@ namespace ThemePOC
         {
             if (Application.Current.Resources.ContainsKey("BackgroundBrush"))
             {
-                ThemeManager.Instance.HighAccentColorBrush = new SolidColorBrush((Windows.UI.Color.FromArgb(Convert.ToByte(random.Next(255)), Convert.ToByte(random.Next(255)), Convert.ToByte(random.Next(255)), Convert.ToByte(random.Next(255)))));
+                ThemeManager.Instance.HighAccentColorBrush = Windows.UI.Color.FromArgb(Convert.ToByte(random.Next(255)), Convert.ToByte(random.Next(255)), Convert.ToByte(random.Next(255)), Convert.ToByte(random.Next(255)));
             }
             ThemeManager.Instance.NotifyThemeChanged();
         }
