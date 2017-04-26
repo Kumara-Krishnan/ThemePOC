@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using ThemePOC.Utils;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -29,7 +30,8 @@ namespace ThemePOC.Views
         {
             this.InitializeComponent();
             random = new Random();
-            ThemePOC.Utils.ThemeManager.ThemeChanged += ThemeManager_ThemeChanged;
+            ThemeManager.ThemeChanged += ThemeManager_ThemeChanged;
+            ThemeManager_ThemeChanged(ThemeManager.Instance);
         }
 
         private void ThemeManager_ThemeChanged(Utils.ThemeManager theme)
